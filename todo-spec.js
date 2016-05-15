@@ -14,4 +14,20 @@ describe('angularjs homepage todo list', function() {
     var completedAmount = element.all(by.css('.done-true'));
     expect(completedAmount.count()).toEqual(2);
   });
+
+  it('should enter a name', function(){
+    browser.get('https://angularjs.org');
+
+    element(by.model('yourName')).sendKeys('Darth Vader');
+
+    var enteredName = element(by.model('yourName'));
+
+    // expect(enteredName.getAttribute('value').toEqual('Darth Vader'));
+
+    enteredName.getAttribute('value').then(function(value){
+      console.log(value);
+    })
+
+  })
+
 });
