@@ -1,6 +1,21 @@
+var origFn = browser.driver.controlFlow().execute;
+
+browser.driver.controlFlow().execute = function() {
+  var args = arguments;
+
+  // queue 100ms wait
+  origFn.call(browser.driver.controlFlow(), function() {
+    return protractor.promise.delayed(100);
+  });
+
+  return origFn.apply(browser.driver.controlFlow(), args);
+};
+
+
 describe('angularjs homepage todo list', function() {
   it('should add a todo', function() {
     browser.get('https://angularjs.org');
+
 
     element(by.model('todoList.todoText')).sendKeys('write first protractor test');
     element(by.css('[value="add"]')).click();
